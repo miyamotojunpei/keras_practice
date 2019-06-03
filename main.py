@@ -13,6 +13,10 @@ def main():
 
     while True:
         ret, frame = cap.read()
+        frame = frame[:, 80:560]
+        cv2.imshow('frame', frame)
+        frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+        cv2.namedWindow("frame", cv2.WINDOW_NORMAL)
         resized = cv2.resize(frame, (32, 32))
         reshaped = resized.reshape([1, 32, 32, 3])
         label = ['Cat', 'Dog']
@@ -21,7 +25,6 @@ def main():
         pred_label = label[np.argmax(pred[0])]
         print('name:', pred_label)
         print('score:', score)
-        cv2.imshow('frame', frame)
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
 
